@@ -4,15 +4,23 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
-import javax.validation.constraints.NotNull;
+/**
+ * extending Stock with specific method implementation for common stocks
+ * 
+ * @author tadej
+ *
+ */
+public class CommonStock extends Stock {
 
-public class CommonStock extends Stock{
-
-	public CommonStock(@NotNull String stockSymbol, @NotNull BigDecimal lastDividend, @NotNull BigDecimal pairValue) {
+	public CommonStock(String stockSymbol, BigDecimal lastDividend, BigDecimal pairValue) {
 		super(stockSymbol, lastDividend, pairValue);
 	}
 
 	public BigDecimal calculateDividendYield(BigDecimal price) {
-		return this.getLastDividend().divide(price,new MathContext(4,RoundingMode.HALF_UP));
+		if (this.getLastDividend().equals(BigDecimal.ZERO)) {
+			return BigDecimal.ZERO;
+		} else {
+			return this.getLastDividend().divide(price, new MathContext(10, RoundingMode.HALF_UP));
+		}
 	}
 }

@@ -4,16 +4,19 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
+/**
+ * extending Stock with specific method implementation for preferred stocks
+ * 
+ * @author tadej
+ *
+ */
+public class PreferredStock extends Stock {
 
-public class PreferredStock extends Stock{
-	@Positive
 	private BigDecimal fixedDividend;
 
-	public PreferredStock(@NotNull String stockSymbol, @NotNull BigDecimal lastDividend, @NotNull BigDecimal pairValue, @NotNull BigDecimal fixedDividend) {
+	public PreferredStock(String stockSymbol, BigDecimal lastDividend, BigDecimal pairValue, BigDecimal fixedDividend) {
 		super(stockSymbol, lastDividend, pairValue);
-		this.fixedDividend = fixedDividend;			
+		this.fixedDividend = fixedDividend;
 	}
 
 	public BigDecimal getFixedDividend() {
@@ -21,7 +24,17 @@ public class PreferredStock extends Stock{
 	}
 
 	public BigDecimal calculateDividendYield(BigDecimal price) {
-		return this.getFixedDividend().multiply(this.getPairValue()).divide(price,new MathContext(4,RoundingMode.HALF_UP));
+		if (this.getFixedDividend().equals(BigDecimal.ZERO)) {
+			return BigDecimal.ZERO;
+		} else {
+			return this.getFixedDividend().multiply(this.getPairValue())
+					.divide(price, new MathContext(10, RoundingMode.HALF_UP)).divide(new BigDecimal(100)); // divide
+																											// with 100
+																											// to get
+																											// percentage
+																											// for fixed
+																											// dividend
+		}
 	}
-	
+
 }

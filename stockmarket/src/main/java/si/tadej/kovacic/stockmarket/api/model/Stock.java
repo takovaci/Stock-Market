@@ -4,18 +4,23 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
-public abstract class Stock implements IStock{
-	@NotNull
+/**
+ * general stock class with implementation of general method calculatePERation
+ * 
+ * @author tadej
+ *
+ */
+public abstract class Stock implements IStock {
+
 	private String stockSymbol;
-	@Positive
+
 	private BigDecimal lastDividend;
-	@NotNull
+
 	private BigDecimal pairValue;
-		
-	public Stock(String stockSymbol,BigDecimal lastDividend, BigDecimal pairValue) {
+
+	public Stock(String stockSymbol, BigDecimal lastDividend, BigDecimal pairValue) {
 		super();
 		this.stockSymbol = stockSymbol.toUpperCase();
 		this.lastDividend = lastDividend;
@@ -29,12 +34,16 @@ public abstract class Stock implements IStock{
 	public BigDecimal getLastDividend() {
 		return lastDividend;
 	}
-	
+
 	public BigDecimal getPairValue() {
 		return pairValue;
 	}
-	
+
 	public BigDecimal calculatePERation(@Positive BigDecimal price) {
-		return price.divide(lastDividend, new MathContext(4,RoundingMode.HALF_UP));
+		if (lastDividend.equals(BigDecimal.ZERO)) {
+			return BigDecimal.ZERO;
+		} else {
+			return price.divide(lastDividend, new MathContext(10, RoundingMode.HALF_UP));
+		}
 	}
 }
