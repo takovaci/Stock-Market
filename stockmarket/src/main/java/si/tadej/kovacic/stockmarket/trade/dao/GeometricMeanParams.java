@@ -3,12 +3,12 @@ package si.tadej.kovacic.stockmarket.trade.dao;
 public class GeometricMeanParams {
 
 	private Integer numberOfTrades;
-	private Double multipliedPrices;
+	private Double sumLogPrices;
 
-	public GeometricMeanParams(Integer numberOfTrades, Double multipliedPrices) {
+	public GeometricMeanParams(Integer numberOfTrades, Double sumLogPrices) {
 		super();
 		this.numberOfTrades = numberOfTrades;
-		this.multipliedPrices = multipliedPrices;
+		this.sumLogPrices = sumLogPrices;
 	}
 
 	public Integer getNumberOfTrades() {
@@ -19,12 +19,12 @@ public class GeometricMeanParams {
 		this.numberOfTrades = numberOfTrades;
 	}
 
-	public Double getMultipliedPrices() {
-		return multipliedPrices;
+	public Double getSumLogPrices() {
+		return sumLogPrices;
 	}
 
-	public void setMultipliedPrices(Double multipliedPrices) {
-		this.multipliedPrices = multipliedPrices;
+	public void setSumLogPrices(Double sumLogPrices) {
+		this.sumLogPrices = sumLogPrices;
 	}
 
 }

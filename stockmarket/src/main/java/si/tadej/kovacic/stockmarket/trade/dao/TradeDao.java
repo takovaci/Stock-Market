@@ -25,7 +25,7 @@ public class TradeDao {
 	private final Map<String, TreeMap<LocalDateTime, TradeRecord>> tradeRecordStore = new HashMap<>();
 
 	private Integer numberOfTrades = 0;
-	private Double multipliedPrices = 1d;
+	private Double sumLogPrices = 0d;
 
 	/**
 	 * before trade is save, number of trades in increased and price multiplied with
@@ -35,7 +35,7 @@ public class TradeDao {
 	 */
 	public void save(TradeRecord tradeRecord) {
 		numberOfTrades++;
-		multipliedPrices = multipliedPrices * tradeRecord.getTradedPrice().doubleValue();
+		sumLogPrices += Math.log(tradeRecord.getTradedPrice().doubleValue());
 		TreeMap<LocalDateTime, TradeRecord> treeMap = getTreeMapForStock(tradeRecord.getStockSymbol());
 		treeMap.put(tradeRecord.getTransactionTime(), tradeRecord);
 	}
@@ -56,7 +56,7 @@ public class TradeDao {
 	}
 
 	public GeometricMeanParams getAllTradeRecords() {
-		return new GeometricMeanParams(numberOfTrades, multipliedPrices);
+		return new GeometricMeanParams(numberOfTrades, sumLogPrices);
 
 	}
 

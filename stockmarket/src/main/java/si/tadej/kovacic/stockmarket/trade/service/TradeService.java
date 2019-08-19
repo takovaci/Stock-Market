@@ -56,8 +56,7 @@ public class TradeService {
 		 * 1 with another integer we always get 0, that is why we need 1.0 so result is
 		 * decimal value
 		 */
-		return new BigDecimal(
-				Math.pow(allTradeRecords.getMultipliedPrices(), 1.0 / allTradeRecords.getNumberOfTrades()),
+		return new BigDecimal(Math.exp(allTradeRecords.getSumLogPrices() / allTradeRecords.getNumberOfTrades()),
 				new MathContext(10, RoundingMode.HALF_UP));
 
 	}

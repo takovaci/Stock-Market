@@ -1,5 +1,8 @@
 package si.tadej.kovacic.stockmarket.trade.endpoint;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -8,17 +11,14 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+
+import si.tadej.kovacic.stockmarket.AbstractTest;
 import si.tadej.kovacic.stockmarket.api.model.TradeRecord;
 import si.tadej.kovacic.stockmarket.api.model.TradeType;
 import si.tadej.kovacic.stockmarket.trade.service.TradeService;
 
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
-
 @RunWith(MockitoJUnitRunner.class)
-public class PublicTradeEndpointTest {
+public class PublicTradeEndpointTest extends AbstractTest{
 	
 	private TradeRecord tradeRecord = new TradeRecord(LocalDateTime.now(),new BigDecimal(2), TradeType.SELL, new BigDecimal(4), "abc");
 	
@@ -29,14 +29,23 @@ public class PublicTradeEndpointTest {
 	private PublicTradeEndpoint testPublicTradeEndpoint;
 	
 	@Test
-	public void recordTrade() {
-		
+	public void recordTradeTest() {
 		testPublicTradeEndpoint.recordTrade(tradeRecord);
 	}
 	
 	@Test
-	public void recordTradeNull() {
-		//testPublicTradeEndpoint.recordTrade();
+	public void calculateGBEShareIndexTest() {
+		BigDecimal index = new BigDecimal(3.4);
+		when(mockTradeService.calculateGBCEShareIndex()).thenReturn(index);	
+		assertEquals(index,testPublicTradeEndpoint.calculateGBCEAllShareIndex());
+	}
+	
+	@Test 
+	public void calculateVolumeWeightedStockPriceTest() {
+		Long minutes = 15l;
+		BigDecimal index = new BigDecimal(33);
+		when(mockTradeService.calculateVolumeWeightedStockPrice(stockSymbol, minutes)).thenReturn(index);
+		assertEquals(index,testPublicTradeEndpoint.calculateVolumeWeightedStockPrice(stockSymbol, minutes));
 	}
 
 }
