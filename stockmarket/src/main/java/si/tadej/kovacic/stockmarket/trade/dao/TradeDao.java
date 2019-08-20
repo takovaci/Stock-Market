@@ -20,7 +20,7 @@ import si.tadej.kovacic.stockmarket.api.model.TradeRecord;
  */
 @Component
 public class TradeDao {
-	// mape is used to group trades by stock symbol
+	// map is used to group trades by stock symbol
 	// TreeMap is used to sort trades by time
 	private final Map<String, TreeMap<LocalDateTime, TradeRecord>> tradeRecordStore = new HashMap<>();
 

@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,14 +12,10 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import si.tadej.kovacic.stockmarket.AbstractTest;
-import si.tadej.kovacic.stockmarket.api.model.TradeRecord;
-import si.tadej.kovacic.stockmarket.api.model.TradeType;
 import si.tadej.kovacic.stockmarket.trade.service.TradeService;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PublicTradeEndpointTest extends AbstractTest{
-	
-	private TradeRecord tradeRecord = new TradeRecord(LocalDateTime.now(),new BigDecimal(2), TradeType.SELL, new BigDecimal(4), "abc");
 	
 	@Mock 
 	private TradeService mockTradeService;
