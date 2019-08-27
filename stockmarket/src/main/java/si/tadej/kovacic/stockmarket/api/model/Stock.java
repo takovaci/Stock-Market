@@ -39,7 +39,7 @@ public abstract class Stock implements IStock {
 		return pairValue;
 	}
 
-	public BigDecimal calculatePERation(@Positive BigDecimal price) {
+	public BigDecimal calculatePERation(BigDecimal price) {
 		if (lastDividend.equals(BigDecimal.ZERO)) {
 			return BigDecimal.ZERO;
 		} else {
